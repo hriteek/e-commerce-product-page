@@ -1,45 +1,55 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useState } from 'react';
+
+import NavBar from './components/navbar';
+import Details from './components/Details';
+import Gallery from './components/Gallery';
+import Model from './components/Model';
+import Cart from './components/Cart';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [price, setPrice] = useState({
+    previousPrice: 250,
+    discount: 50,
+  });
+  const [open, setOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [count, setCount] = useState(0);
+  const [item, setItem] = useState(2);
+  const handleItem = (item: number) => {
+    setItem(item);
+  };
+  const handleCount = (op: string) => {
+    setCount(() => {
+      if (count >= 0) {
+        if (op === '+') {
+          return count + 1;
+        } else if (count == 0) {
+          return 0;
+        } else {
+          return count - 1;
+        }
+      }
+      return 0;
+    });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <>
+      <div className='w-3/4 mx-auto'>
+        <NavBar open={cartOpen} setOpen={setCartOpen}/>
+        <Cart open={cartOpen} setOpen={setCartOpen} />
+        <div className='flex my-20 justify-between items-center'>
+          <Gallery setOpen={setOpen} item={item} handleItem={handleItem} />
+          <Details
+            previousPrice={price.previousPrice}
+            discount={price.discount}
+            count={count}
+            handler={handleCount}
+          />
+        </div>
+        <Model open={open} setOpen={setOpen} />
+      </div>
+    </>
+  );
 }
 
-export default App
+export default App;
