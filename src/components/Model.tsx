@@ -4,16 +4,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import { ReactComponent as IconNext } from '../images/icon-next.svg';
 import { ReactComponent as IconPrevious } from '../images/icon-previous.svg';
 import { ReactComponent as IconClose } from '../images/icon-close.svg';
-import Product1 from '../images/image-product-1.jpg';
-import Product2 from '../images/image-product-2.jpg';
-import Product3 from '../images/image-product-3.jpg';
-import Product4 from '../images/image-product-4.jpg';
-import Product1Thumbnail from '../images/image-product-1-thumbnail.jpg';
-import Product2Thumbnail from '../images/image-product-2-thumbnail.jpg';
-import Product3Thumbnail from '../images/image-product-3-thumbnail.jpg';
-import Product4Thumbnail from '../images/image-product-4-thumbnail.jpg';
 
-import { productObj } from './Gallery';
+import { useProductStore, IProduct } from '../store/store';
 
 interface IModelProps {
   open: boolean;
@@ -21,6 +13,7 @@ interface IModelProps {
 }
 
 const Model = (props: IModelProps) => {
+  const product: IProduct = useProductStore((state) => state.product);
   const [item, setItem] = useState(1);
 
   const cancelButtonRef = useRef(null);
@@ -92,7 +85,7 @@ const Model = (props: IModelProps) => {
                       <div className=''>
                         <img
                           className='rounded-xl'
-                          src={productObj[item]}
+                          src={product.image[item - 1]}
                           alt='product'
                         />
                       </div>
@@ -100,30 +93,14 @@ const Model = (props: IModelProps) => {
                   </div>
                 </div>
                 <div className='flex justify-around mt-4 mx-20'>
-                  <img
-                    className='w-16 h-16 rounded-md cursor-pointer'
-                    src={Product1Thumbnail}
-                    alt='Product1 thumbnail'
-                    onClick={() => setItem(1)}
-                  />
-                  <img
-                    className='w-16 h-16 rounded-md cursor-pointer'
-                    src={Product2Thumbnail}
-                    alt='Product2 thumbnail'
-                    onClick={() => setItem(2)}
-                  />
-                  <img
-                    className='w-16 h-16 rounded-md cursor-pointer'
-                    src={Product3Thumbnail}
-                    alt='Product3 thumbnail'
-                    onClick={() => setItem(3)}
-                  />
-                  <img
-                    className='w-16 h-16 rounded-md cursor-pointer'
-                    src={Product4Thumbnail}
-                    alt='Product4 thumbnail'
-                    onClick={() => setItem(4)}
-                  />
+                  {product?.thumbnail?.map((thumbnail, index) => (
+                    <img
+                      className='w-16 h-16 rounded-md cursor-pointer'
+                      src={thumbnail}
+                      alt='Product1 thumbnail'
+                      onClick={() => setItem(index + 1)}
+                    />
+                  ))}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

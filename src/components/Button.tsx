@@ -1,12 +1,15 @@
 interface IButtonProps {
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 const Button = (props: IButtonProps) => {
   return (
     <>
-      <button className={props.className}>{props.children}</button>
+      <button onClick={props.onClick} className={props.className}>
+        {props.children}
+      </button>
     </>
   );
 };

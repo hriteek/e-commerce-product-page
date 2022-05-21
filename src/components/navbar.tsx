@@ -1,9 +1,9 @@
 import { ReactComponent as CartIcons } from '../images/icon-cart.svg';
-import Avatar from '../images/image-avatar.png';
 
 interface INavbarProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  count: number;
 }
 
 const NavBar = (props: INavbarProps) => {
@@ -11,19 +11,38 @@ const NavBar = (props: INavbarProps) => {
     <>
       <nav className='flex justify-between h-20 items-center border-b'>
         <ul className='flex items-center'>
-          <li className='font-extrabold text-2xl mr-6'>sneakers</li>
-          <li className='mx-4 capitalize'>collections</li>
-          <li className='mx-4 capitalize'>men</li>
-          <li className='mx-4 capitalize'>woman</li>
-          <li className='mx-4 capitalize'>about</li>
-          <li className='mx-4 capitalize'>contact</li>
+          <li className='font-extrabold text-2xl mr-6'>
+            <a href='#'>sneakers</a>
+          </li>
+          <li className='mx-4 capitalize'>
+            <a href='#'>collections</a>
+          </li>
+          <li className='mx-4 capitalize'>
+            <a href='#'>men</a>
+          </li>
+          <li className='mx-4 capitalize'>
+            <a href='#'>woman</a>
+          </li>
+          <li className='mx-4 capitalize'>
+            <a href='#'>about</a>
+          </li>
+          <li className='mx-4 capitalize'>
+            <a href='#'>contact</a>
+          </li>
         </ul>
-        <div className='flex'>
+        <div className='flex relative'>
           <CartIcons
             onClick={() => props.setOpen(!props.open)}
             className='block self-center cursor-pointer'
           />
-          <img className='w-10 h-10 ml-4' src={Avatar} alt='avatar' />
+          <span className='absolute bg-orange w-4 h-4 rounded-full text-white text-center leading-4 text-sm right-12'>
+            {props.count}
+          </span>
+          <img
+            className='w-10 h-10 ml-4'
+            src='/image-avatar.png'
+            alt='avatar'
+          />
         </div>
       </nav>
     </>
